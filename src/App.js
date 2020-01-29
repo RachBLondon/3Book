@@ -34,7 +34,9 @@ export default class App extends Component {
       // Now MetaMask's provider has been enabled, we can start working with 3Box
       await this.auth3box();
 
-
+      const space = await this.state.box.openSpace('3Book');
+      await space.syncDone;
+			this.setState({space});
     }
   }
   render() {
