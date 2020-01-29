@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Form, Button, Navbar, Nav, Card } from 'react-bootstrap';
+import ProfileHover from 'profile-hover';
 
 export default class App extends Component {
 
@@ -76,7 +77,7 @@ class Home extends Component {
   render() {
     return (<>
       <h1>Home</h1>
-      <h2>{this.props.ethAddress}</h2>
+      <ProfileHover address={this.props.ethAddress} showName={true} />
     </>);
   }
 }
