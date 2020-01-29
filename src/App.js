@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Form, Button, Navbar, Nav, Card } from 'react-bootstrap';
 import ProfileHover from 'profile-hover';
+import Box from '3box'; 
 
 export default class App extends Component {
 
@@ -18,10 +19,22 @@ export default class App extends Component {
       this.setState({ accounts });
     }
   }
+  async auth3box() {
+    const address = this.state.accounts[0];
+    const spaces = ['3Book'];
+    const box = await Box.create(window.ethereum);
+    await box.auth(spaces, { address });
+    await box.syncDone;
+    this.setState({ box });
+  }
+
   async componentDidMount() {
     await this.getAddressFromMetaMask();
     if (this.state.accounts) {
       // Now MetaMask's provider has been enabled, we can start working with 3Box
+      await this.auth3box();
+
+
     }
   }
   render() {
