@@ -1,3 +1,8 @@
+# 3Book - A 3Box Tutorial
+
+This tutorial takes your through the steps of working with 3Box spaces and the profile hover plugin.
+
+
 ## Setup and Tech Stack
 
 For the tutorial, some familiarity with react is required. You can complete by copying and pasting each step, but to get a more meaningful understanding, it is recommended you are familiar with the basics.
