@@ -71,7 +71,7 @@ export default class App extends Component {
                   />
                 </Route>
                 <Route path="/notes">
-                  <Notes />
+                  <Notes space={this.state.space}/>
                 </Route>
                 <Route path="/">
                   <Home
@@ -114,6 +114,8 @@ class Notes extends Component {
 
   publicSave = async (e) => {
     e.preventDefault();
+    //saves to a public 3Box space
+    await this.props.space.public.set(Date.now(), this.state.publicNoteToSave);
 
     this.setState({publicNoteToSave : null});
     console.log("saved")
@@ -121,6 +123,9 @@ class Notes extends Component {
 
   privateSave = async (e) => {
     e.preventDefault();
+
+    //saves to a private 3Box space
+		await this.props.space.private.set(Date.now(), this.state.privateNoteToSave);
 
     this.setState({privateNoteToSave : null});
     console.log("saved");
@@ -133,7 +138,7 @@ class Notes extends Component {
         <h2>Notes</h2>
         <br />
         <Button onClick={() => (this.setState({ view: !this.state.view }))}> {this.state.view ? "Add" : "View"}</Button>
-        {!this.state.view && (<>
+        {!this.state.view && this.props.space && (<>
           <h3>📖Public</h3>
           <FormComponent
             handleSubmit={this.publicSave}
