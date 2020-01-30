@@ -119,6 +119,7 @@ class Notes extends Component {
 
     this.setState({publicNoteToSave : null});
     console.log("saved")
+    this.getPublicNotes();
   }
 
   privateSave = async (e) => {
@@ -129,7 +130,27 @@ class Notes extends Component {
 
     this.setState({privateNoteToSave : null});
     console.log("saved");
+    this.getPrivateNotes();
   }
+
+
+  getPublicNotes = async () => {
+    const publicNotes = await this.props.space.public.all();
+    this.setState({ publicNotes });
+  }
+
+  getPrivateNotes = async () => {
+    const privateNotes = await this.props.space.private.all();
+    this.setState({ privateNotes });
+  }
+
+  componentDidUpdate(){
+    if(this.props.space && (!this.state.privateNotes || !this.state.publicNotes)){
+      this.getPublicNotes();
+      this.getPrivateNotes();
+    }
+  }
+
   render() {
 
 
@@ -158,13 +179,17 @@ class Notes extends Component {
             text="This text will be encrypted and saved with 3Box"
           />
         </>)}
+
         {this.state.view && <>
           <h2>View</h2>
           <br />
           <h3>📖Public</h3>
+          {this.state.publicNotes &&  Object.values(this.state.publicNotes).map(note => <p>{note}</p>)}
           <br />
           <h3>🗝Private</h3>
+          {this.state.privateNotes && Object.values(this.state.privateNotes).map(note => <p>{note}</p>)}
         </>}
+
       </div>
     )
   }
